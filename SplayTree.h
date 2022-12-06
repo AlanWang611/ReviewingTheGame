@@ -5,8 +5,11 @@
 //
 #include <iostream>
 #include <queue>
+#include <chrono>
+#include <vector>
 
 using namespace std;
+using namespace std::chrono;
 class SplayTree
 {
 public:
@@ -231,6 +234,9 @@ public:
     //outputs the game and review
     void search(int key)
     {
+        //start timer occurs at the start of search
+        auto start = high_resolution_clock::now();
+
         //store the head in temp
         Node* temp = head;
         //goes through the tree to find data
@@ -279,6 +285,13 @@ public:
         }
         //splays the node
         splay(temp);
+
+        //timer ends sense splay tree search is over
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<nanoseconds>(stop - start);
+
+        //prints out splay tree time
+        cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
     }
 
     //find the parent of the node
