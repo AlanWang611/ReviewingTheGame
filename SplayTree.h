@@ -5,6 +5,7 @@
 //
 #include <iostream>
 #include <chrono>
+#include <queue>
 #include <vector>
 
 using namespace std;
@@ -15,7 +16,7 @@ public:
     //creating a struct for the splay tree
     struct Node
     {
-        int value;
+        int ID;
         Node* parent;
         Node *left;
         Node *right;
@@ -23,7 +24,7 @@ public:
         string gameReview;
 
         //default constructor
-        Node(int ID, string GameName, string GameReview) : value(ID), gameName(GameName), gameReview(GameReview), left(nullptr), right(nullptr), parent(nullptr) {}
+        Node(int ID, string GameName, string GameReview) : ID(ID), gameName(GameName), gameReview(GameReview), left(nullptr), right(nullptr), parent(nullptr) {}
 
     };
     //store root node here
@@ -39,7 +40,7 @@ public:
     //left rotation on the selected node
     void leftRotate(Node* oldTopNode)
     {
-        //if the right value is null then no rotation needed
+        //if the right ID is null then no rotation needed
         if (oldTopNode -> right != nullptr)
         {
             //set the current top node
@@ -90,7 +91,7 @@ public:
     //right rotation on the selected node
     void rightRotate(Node* oldTopNode)
     {
-        //if the left value is null then no rotation needed
+        //if the left ID is null then no rotation needed
         if (oldTopNode -> left != nullptr)
         {
             //set the current top node
@@ -239,12 +240,12 @@ public:
         //store the head in temp
         Node* temp = head;
         //goes through the tree to find data
-        while (temp != nullptr || temp -> value == ID)
+        while (temp != nullptr || temp -> ID == ID)
         {
             //checks if it is on the right side
-            if (temp -> value < ID)
+            if (temp -> ID < ID)
             {
-                //checks if value is not found then output
+                //checks if ID is not found then output
                 if (temp -> right == nullptr)
                 {
                     //if not found output NOT FOUND
@@ -255,16 +256,16 @@ public:
                     auto duration = duration_cast<nanoseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
                     break;
                 }
                 //keeps traversing right
                 temp = temp -> right;
             }
             //checks if it is on the left side
-            else if (temp -> value > ID)
+            else if (temp -> ID > ID)
             {
-                //checks if value is not found then output
+                //checks if ID is not found then output
                 if (temp -> left == nullptr)
                 {
                     //if not found output NOT FOUND
@@ -275,14 +276,14 @@ public:
                     auto duration = duration_cast<nanoseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
                     break;
                 }
                 //keeps traversing left
                 temp = temp -> left;
             }
-            //checks if it equals the current value
-            else if (temp -> value == ID)
+            //checks if it equals the current ID
+            else if (temp -> ID == ID)
             {
                 //output statement
                 if(temp -> gameReview[0] == '"')
@@ -295,7 +296,7 @@ public:
                     auto duration = duration_cast<nanoseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
                     break;
                 }
                 else
@@ -308,7 +309,7 @@ public:
                     auto duration = duration_cast<nanoseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
                     break;
                 }
 
@@ -324,7 +325,7 @@ public:
                 auto duration = duration_cast<nanoseconds>(stop - start);
 
                 //prints out splay tree time
-                cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
                 break;
             }
         }
@@ -341,7 +342,7 @@ public:
         {
             parent = temp;
             //checks if it is on the left
-            if (node -> value < temp -> value)
+            if (node -> ID < temp -> ID)
             {
                 temp = temp -> left;
             }
@@ -365,7 +366,7 @@ public:
     void childFunction(Node*& node, Node*& temp, Node*& parent)
     {
         //checks if it is on the left
-        if (node -> value < parent -> value)
+        if (node -> ID < parent -> ID)
         {
             parent -> left = node;
         }
@@ -388,7 +389,7 @@ public:
         //set temp to head
         Node* temp = head;
 
-        //finds the value of the parent function at
+        //finds the ID of the parent function at
         parentFunction(node,temp,parent);
 
         // parent is parent of temp
@@ -406,7 +407,6 @@ public:
         if (node != nullptr)
             splay(node);
     }
-
 };
 
 #endif //PROJECT3_REVIEWING_THE_GAME_SPLAYTREE_H
