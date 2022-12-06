@@ -249,7 +249,7 @@ public:
                 if (temp -> right == nullptr)
                 {
                     //if not found output NOT FOUND
-                    cout << "REVIEW: " << ID << " COULD NOT BE FOUND :(" << endl;
+                    cout << "REVIEW ID: " << ID << " COULD NOT BE FOUND :(" << endl;
 
                     //timer ends since splay tree search is over
                     auto stop = high_resolution_clock::now();
@@ -269,7 +269,7 @@ public:
                 if (temp -> left == nullptr)
                 {
                     //if not found output NOT FOUND
-                    cout << "REVIEW: " << ID << " COULD NOT BE FOUND :(" << endl;
+                    cout << "REVIEW ID: " << ID << " COULD NOT BE FOUND :(" << endl;
 
                     //timer ends since splay tree search is over
                     auto stop = high_resolution_clock::now();
@@ -318,7 +318,7 @@ public:
             //if not found output NOT FOUND
             else
             {
-                cout << "REVIEW: " << ID << " COULD NOT BE FOUND :(" << endl;
+                cout << "REVIEW ID: " << ID << " COULD NOT BE FOUND :(" << endl;
 
                 //timer ends since splay tree search is over
                 auto stop = high_resolution_clock::now();
