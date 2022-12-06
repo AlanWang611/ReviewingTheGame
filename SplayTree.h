@@ -41,33 +41,85 @@ public:
         if (oldTopNode -> right != nullptr)
         {
             //set the current top node
-            Node *topNode = oldTopNode->right;
+            Node *topNode = oldTopNode -> right;
             //set the moved function to the old top
-            oldTopNode->right = topNode->left;
+            oldTopNode -> right = topNode -> left;
+            //find parent of the old root
+            Node* parent = oldTopNode -> parent;
             //set the child to the parent
-            if (topNode->left == nullptr)
+            if (topNode -> left == nullptr)
             {
                 topNode -> left = nullptr;
             }
             else
             {
-                topNode->left->parent = oldTopNode;
+                //set parent
+                topNode -> left -> parent = oldTopNode;
             }
-            topNode->parent = oldTopNode->parent;
-            if (oldTopNode->parent == nullptr) {
+            //if the node is not near the top of the tree
+            if (topNode -> parent != nullptr)
+            {
+                topNode -> parent = oldTopNode -> parent;
+            }
+            //only one element in tree
+            if (noFamily(oldTopNode))
+            {
                 head = topNode;
-            } else if (oldTopNode == oldTopNode->parent->left) {
-                oldTopNode->parent->left = topNode;
-            } else {
-                oldTopNode->parent->right = topNode;
             }
-            topNode->left = oldTopNode;
-            oldTopNode->parent = topNode;
+            //checks if it is on the left
+            else if (oldTopNode == parent -> left)
+            {
+                parent -> left = topNode;
+            }
+            //checks if it is on the right
+            else
+            {
+                parent -> right = topNode;
+            }
+            //set back to the original
+            topNode -> left = oldTopNode;
+            oldTopNode -> parent = topNode;
         }
     }
 
+    //right rotation on the selected node
     void rightRotate(Node* oldTopNode)
     {
+        //if the left value is null then no rotation needed
+        if (oldTopNode -> left != nullptr) {
+            //set the current top node
+            Node *topNode = oldTopNode->left;
+            //set the moved function to the old top
+            oldTopNode->left = topNode->right;
+            //find parent of the old root
+            Node *parent = oldTopNode->parent;
+            //set the child to the parent
+            if (topNode->right == nullptr) {
+                topNode->right = nullptr;
+            } else {
+                //set parent
+                topNode->right->parent = oldTopNode;
+            }
+            //if the node is not near the top of the tree
+            if (topNode->parent != nullptr) {
+                topNode->parent = oldTopNode->parent;
+            }
+            //only one element in tree
+            if (noFamily(oldTopNode)) {
+                head = topNode;
+            }
+                //checks if it is on the left
+            else if (oldTopNode == parent->right) {
+                parent->right = topNode;
+            }
+                //checks if it is on the right
+            else {
+                parent->left = topNode;
+            }
+            //set back to the original
+            topNode->right = oldTopNode;
+            oldTopNode->parent = topNode;
+            /*
         Node* topNode = oldTopNode -> left;
         oldTopNode -> left = topNode -> right;
         if (topNode -> right != nullptr) {
@@ -78,7 +130,7 @@ public:
             head = topNode;
         }
         else if (oldTopNode == oldTopNode -> parent -> right) {
-            oldTopNode ->parent -> right = topNode;
+            oldTopNode  -> parent -> right = topNode;
         }
         else
         {
@@ -86,34 +138,38 @@ public:
         }
         topNode -> right = oldTopNode;
         oldTopNode -> parent = topNode;
+             */
+
+        }
     }
+
     void splay(Node* x)
     {
-        while (x->parent) {
-            if (!x->parent->parent) {
-                if (x == x->parent->left) {
+        while (x -> parent) {
+            if (!x -> parent -> parent) {
+                if (x == x -> parent -> left) {
                     // zig rotation
-                    rightRotate(x->parent);
+                    rightRotate(x -> parent);
                 } else {
                     // zag rotation
-                    leftRotate(x->parent);
+                    leftRotate(x -> parent);
                 }
-            } else if (x == x->parent->left && x->parent == x->parent->parent->left) {
+            } else if (x == x -> parent -> left && x -> parent == x -> parent -> parent -> left) {
                 // zig-zig rotation
-                rightRotate(x->parent->parent);
-                rightRotate(x->parent);
-            } else if (x == x->parent->right && x->parent == x->parent->parent->right) {
+                rightRotate(x -> parent -> parent);
+                rightRotate(x -> parent);
+            } else if (x == x -> parent -> right && x -> parent == x -> parent -> parent -> right) {
                 // zag-zag rotation
-                leftRotate(x->parent->parent);
-                leftRotate(x->parent);
-            } else if (x == x->parent->right && x->parent == x->parent->parent->left) {
+                leftRotate(x -> parent -> parent);
+                leftRotate(x -> parent);
+            } else if (x == x -> parent -> right && x -> parent == x -> parent -> parent -> left) {
                 // zig-zag rotation
-                leftRotate(x->parent);
-                rightRotate(x->parent);
+                leftRotate(x -> parent);
+                rightRotate(x -> parent);
             } else {
                 // zag-zig rotation
-                rightRotate(x->parent);
-                leftRotate(x->parent);
+                rightRotate(x -> parent);
+                leftRotate(x -> parent);
             }
         }
     }
@@ -181,30 +237,38 @@ public:
         {
             parent = temp;
             //checks if it is on the left
-            if (node->value < temp->value)
+            if (node -> value < temp -> value)
             {
-                temp = temp->left;
+                temp = temp -> left;
             }
             //checks if it is on the right
             else
             {
-                temp = temp->right;
+                temp = temp -> right;
             }
         }
+    }
+
+    //returns true if the node has no alive family
+    bool noFamily(Node* node)
+    {
+        if (node -> parent == nullptr)
+            return true;
+        return false;
     }
 
     //helps the parents point the child node
     void childFunction(Node*& node, Node*& temp, Node*& parent)
     {
         //checks if it is on the left
-        if (node->value < parent->value)
+        if (node -> value < parent -> value)
         {
-            parent->left = node;
+            parent -> left = node;
         }
         //checks if it is on the right
         else
         {
-            parent->right = node;
+            parent -> right = node;
         }
     }
 
@@ -224,7 +288,7 @@ public:
         parentFunction(node,temp,parent);
 
         // parent is parent of temp
-        node->parent = parent;
+        node -> parent = parent;
 
         //if no parent then only one node
         if (node -> parent == nullptr)
@@ -259,12 +323,12 @@ public:
 
                     node = q.front();
                     q.pop();
-                    cout << node->value << ", ";
-                    if (node->left != nullptr) {
-                        q.push(node->left);
+                    cout << node -> value << ", ";
+                    if (node -> left != nullptr) {
+                        q.push(node -> left);
                     }
-                    if (node->right != nullptr) {
-                        q.push(node->right);
+                    if (node -> right != nullptr) {
+                        q.push(node -> right);
                     }
                 }
             }
