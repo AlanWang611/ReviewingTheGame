@@ -4,7 +4,6 @@
 // Created by Alan Wang on 12/6/2022 at 11:59pm.
 //
 #include <iostream>
-#include <queue>
 #include <chrono>
 #include <vector>
 
@@ -232,7 +231,7 @@ public:
 
     //searches for the key
     //outputs the game and review
-    void search(int key)
+    void search(int ID)
     {
         //start timer occurs at the start of search
         auto start = high_resolution_clock::now();
@@ -240,58 +239,97 @@ public:
         //store the head in temp
         Node* temp = head;
         //goes through the tree to find data
-        while (temp != nullptr || temp -> value == key)
+        while (temp != nullptr || temp -> value == ID)
         {
             //checks if it is on the right side
-            if (temp -> value < key)
+            if (temp -> value < ID)
             {
                 //checks if value is not found then output
                 if (temp -> right == nullptr)
                 {
                     //if not found output NOT FOUND
-                    cout << "REVIEW ID: " << key << " CAN NOT BE FOUND" << endl;
+                    cout << "REVIEW: " << ID << " COULD NOT BE FOUND :(" << endl;
+
+                    //timer ends since splay tree search is over
+                    auto stop = high_resolution_clock::now();
+                    auto duration = duration_cast<nanoseconds>(stop - start);
+
+                    //prints out splay tree time
+                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
                     break;
                 }
                 //keeps traversing right
                 temp = temp -> right;
             }
             //checks if it is on the left side
-            else if (temp -> value > key)
+            else if (temp -> value > ID)
             {
                 //checks if value is not found then output
                 if (temp -> left == nullptr)
                 {
                     //if not found output NOT FOUND
-                    cout << "REVIEW ID: " << key << " CAN NOT BE FOUND" << endl;
+                    cout << "REVIEW: " << ID << " COULD NOT BE FOUND :(" << endl;
+
+                    //timer ends since splay tree search is over
+                    auto stop = high_resolution_clock::now();
+                    auto duration = duration_cast<nanoseconds>(stop - start);
+
+                    //prints out splay tree time
+                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
                     break;
                 }
                 //keeps traversing left
                 temp = temp -> left;
             }
             //checks if it equals the current value
-            else if (temp -> value == key)
+            else if (temp -> value == ID)
             {
                 //output statement
-                cout << "This review is for " << "\"" + temp -> gameName + "\"";
-                cout <<" and the review says \"" + temp -> gameReview + "\"" << endl;
+                if(temp -> gameReview[0] == '"')
+                {
+                    cout << "This review is for " << "\"" + temp -> gameName + "\"";
+                    cout <<" and the review says " + temp -> gameReview << endl;
+
+                    //timer ends since splay tree search is over
+                    auto stop = high_resolution_clock::now();
+                    auto duration = duration_cast<nanoseconds>(stop - start);
+
+                    //prints out splay tree time
+                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                    break;
+                }
+                else
+                {
+                    cout << "This review is for " << "\"" + temp -> gameName + "\"";
+                    cout << " and the review says \"" + temp -> gameReview + "\"" << endl;
+
+                    //timer ends since splay tree search is over
+                    auto stop = high_resolution_clock::now();
+                    auto duration = duration_cast<nanoseconds>(stop - start);
+
+                    //prints out splay tree time
+                    cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
+                    break;
+                }
+
                 break;
             }
             //if not found output NOT FOUND
             else
             {
-                cout << "REVIEW ID: " << key << " CAN NOT BE FOUND" << endl;
+                cout << "REVIEW: " << ID << " COULD NOT BE FOUND :(" << endl;
+
+                //timer ends since splay tree search is over
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<nanoseconds>(stop - start);
+
+                //prints out splay tree time
+                cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
                 break;
             }
         }
         //splays the node
         splay(temp);
-
-        //timer ends sense splay tree search is over
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<nanoseconds>(stop - start);
-
-        //prints out splay tree time
-        cout << "A Splay Tree Search takes " << duration.count() << " nanoseconds!" << endl;
     }
 
     //find the parent of the node
@@ -339,10 +377,10 @@ public:
     }
 
     //insert function with the parameters for the node
-    void insert(int key, string name, string review)
+    void insert(int ID, string name, string review)
     {
         // creating node with set parameters
-        Node* node = new Node(key, name, review);
+        Node* node = new Node(ID, name, review);
 
         //set parent to null
         Node* parent = nullptr;
@@ -369,41 +407,6 @@ public:
             splay(node);
     }
 
-    //print level order helper function
-    void printLevelorder()
-    {
-        printLevelorder(head);
-    }
-
-    //print level order function
-    static void printLevelorder(Node *node)
-    {
-        if (node != nullptr){
-            //create queue
-            queue<Node *> q;
-            q.push(node);
-            //find current level
-
-            while (!q.empty()) {
-                int size = q.size();
-                for (int i = 0; i < size; i++)
-                {
-                    //pops the queue
-                    node = q.front();
-                    q.pop();
-                    cout << node -> value << ", ";
-                    if (node -> left != nullptr)
-                    {
-                        q.push(node -> left);
-                    }
-                    if (node -> right != nullptr)
-                    {
-                        q.push(node -> right);
-                    }
-                }
-            }
-        }
-    }
 };
 
 #endif //PROJECT3_REVIEWING_THE_GAME_SPLAYTREE_H
