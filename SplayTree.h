@@ -1,7 +1,7 @@
 #ifndef PROJECT3_REVIEWING_THE_GAME_SPLAYTREE_H
 #define PROJECT3_REVIEWING_THE_GAME_SPLAYTREE_H
 //
-// Created by Alan Wang on 10/7/2022.
+// Created by Alan Wang on 12/6/2022 at 11:59pm.
 //
 #include <iostream>
 #include <queue>
@@ -42,8 +42,10 @@ public:
         {
             //set the current top node
             Node *topNode = oldTopNode -> right;
+
             //set the moved function to the old top
             oldTopNode -> right = topNode -> left;
+
             //find parent of the old root
             Node* parent = oldTopNode -> parent;
             //set the child to the parent
@@ -76,6 +78,7 @@ public:
             {
                 parent -> right = topNode;
             }
+
             //set back to the original
             topNode -> left = oldTopNode;
             oldTopNode -> parent = topNode;
@@ -86,92 +89,142 @@ public:
     void rightRotate(Node* oldTopNode)
     {
         //if the left value is null then no rotation needed
-        if (oldTopNode -> left != nullptr) {
+        if (oldTopNode -> left != nullptr)
+        {
             //set the current top node
             Node *topNode = oldTopNode->left;
+
             //set the moved function to the old top
             oldTopNode->left = topNode->right;
+
             //find parent of the old root
             Node *parent = oldTopNode->parent;
+
             //set the child to the parent
-            if (topNode->right == nullptr) {
+            if (topNode->right == nullptr)
+            {
                 topNode->right = nullptr;
-            } else {
+            } else
+            {
                 //set parent
                 topNode->right->parent = oldTopNode;
             }
             //if the node is not near the top of the tree
-            if (topNode->parent != nullptr) {
+            if (topNode->parent != nullptr)
+            {
                 topNode->parent = oldTopNode->parent;
             }
             //only one element in tree
-            if (noFamily(oldTopNode)) {
+            if (noFamily(oldTopNode))
+            {
                 head = topNode;
             }
-                //checks if it is on the left
-            else if (oldTopNode == parent->right) {
+            //checks if it is on the left
+            else if (oldTopNode == parent->right)
+            {
                 parent->right = topNode;
             }
-                //checks if it is on the right
-            else {
+            //checks if it is on the right
+            else
+            {
                 parent->left = topNode;
             }
+
             //set back to the original
             topNode->right = oldTopNode;
             oldTopNode->parent = topNode;
-            /*
-        Node* topNode = oldTopNode -> left;
-        oldTopNode -> left = topNode -> right;
-        if (topNode -> right != nullptr) {
-            topNode -> right -> parent = oldTopNode;
-        }
-        topNode -> parent = oldTopNode -> parent;
-        if (oldTopNode -> parent == nullptr) {
-            head = topNode;
-        }
-        else if (oldTopNode == oldTopNode -> parent -> right) {
-            oldTopNode  -> parent -> right = topNode;
-        }
-        else
-        {
-            oldTopNode -> parent -> left = topNode;
-        }
-        topNode -> right = oldTopNode;
-        oldTopNode -> parent = topNode;
-             */
-
         }
     }
 
-    void splay(Node* x)
+    //splays the current node to the top
+    void splay(Node* current)
     {
-        while (x -> parent) {
-            if (!x -> parent -> parent) {
-                if (x == x -> parent -> left) {
-                    // zig rotation
-                    rightRotate(x -> parent);
-                } else {
-                    // zag rotation
-                    leftRotate(x -> parent);
+        //checks if node is null
+        if (current != nullptr)
+        {
+
+            //recursively call splay until the node is the root
+            while (current -> parent != nullptr)
+            {
+
+                //checks the two previous nodes
+                if (current -> parent -> parent == nullptr)
+                {
+                    //checks the zig or zag rotation
+                    if (current == current -> parent -> left)
+                    {
+                        // right rotation
+                        rightRotate(current -> parent);
+                    } else
+                    {
+                        // left rotation
+                        leftRotate(current -> parent);
+                    }
                 }
-            } else if (x == x -> parent -> left && x -> parent == x -> parent -> parent -> left) {
-                // zig-zig rotation
-                rightRotate(x -> parent -> parent);
-                rightRotate(x -> parent);
-            } else if (x == x -> parent -> right && x -> parent == x -> parent -> parent -> right) {
-                // zag-zag rotation
-                leftRotate(x -> parent -> parent);
-                leftRotate(x -> parent);
-            } else if (x == x -> parent -> right && x -> parent == x -> parent -> parent -> left) {
-                // zig-zag rotation
-                leftRotate(x -> parent);
-                rightRotate(x -> parent);
-            } else {
-                // zag-zig rotation
-                rightRotate(x -> parent);
-                leftRotate(x -> parent);
+                //checks left-left
+                else if (leftOne(current) && leftTwo(current))
+                {
+                    // left-left rotation
+                    rightRotate(current -> parent -> parent);
+                    rightRotate(current -> parent);
+                }
+                //checks right-right
+                else if (rightOne(current) && rightTwo(current))
+                {
+                    // right-right rotation
+                    leftRotate(current -> parent -> parent);
+                    leftRotate(current -> parent);
+                }
+                //checks left-right
+                else if (rightOne(current) && leftTwo(current))
+                {
+                    // left-right rotation
+                    leftRotate(current -> parent);
+                    rightRotate(current -> parent);
+                }
+                //if default then right-left
+                else
+                {
+                    // right-left rotation
+                    rightRotate(current -> parent);
+                    leftRotate(current -> parent);
+                }
             }
         }
+    }
+
+    //checks one level up if a left rotation is possible
+    static bool leftOne (Node* current)
+    {
+        if (current != current -> parent -> left)
+            return false;
+
+        return true;
+    }
+
+    //checks two levels up if a left rotation is possible
+    static bool leftTwo (Node* current)
+    {
+        if (current -> parent == current -> parent -> parent -> left)
+            return false;
+        return true;
+    }
+
+    //checks one level up if a right rotation is possible
+    static bool rightOne (Node* current)
+    {
+        if (current != current -> parent -> right)
+            return false;
+
+        return true;
+    }
+
+    //checks two levels up if a right rotation is possible
+    static bool rightTwo (Node* current)
+    {
+        if (current -> parent == current -> parent -> parent -> right)
+            return false;
+        return true;
     }
 
     //searches for the key
@@ -303,31 +356,35 @@ public:
             splay(node);
     }
 
+    //print level order helper function
     void printLevelorder()
     {
         printLevelorder(head);
     }
-    void printLevelorder(Node *node)
+
+    //print level order function
+    static void printLevelorder(Node *node)
     {
         if (node != nullptr){
             //create queue
-            int level = 0;
             queue<Node *> q;
             q.push(node);
             //find current level
-            int current = 0;
-            int sum = 0;
+
             while (!q.empty()) {
                 int size = q.size();
-                for (int i = 0; i < size; i++) {
-
+                for (int i = 0; i < size; i++)
+                {
+                    //pops the queue
                     node = q.front();
                     q.pop();
                     cout << node -> value << ", ";
-                    if (node -> left != nullptr) {
+                    if (node -> left != nullptr)
+                    {
                         q.push(node -> left);
                     }
-                    if (node -> right != nullptr) {
+                    if (node -> right != nullptr)
+                    {
                         q.push(node -> right);
                     }
                 }
