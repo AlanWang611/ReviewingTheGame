@@ -71,12 +71,12 @@ public:
             {
                 head = topNode;
             }
-            //checks if it is on the left
+                //checks if it is on the left
             else if (oldTopNode == parent -> left)
             {
                 parent -> left = topNode;
             }
-            //checks if it is on the right
+                //checks if it is on the right
             else
             {
                 parent -> right = topNode;
@@ -122,12 +122,12 @@ public:
             {
                 head = topNode;
             }
-            //checks if it is on the left
+                //checks if it is on the left
             else if (oldTopNode == parent->right)
             {
                 parent->right = topNode;
             }
-            //checks if it is on the right
+                //checks if it is on the right
             else
             {
                 parent->left = topNode;
@@ -164,28 +164,28 @@ public:
                         leftRotate(current -> parent);
                     }
                 }
-                //checks left-left
+                    //checks left-left
                 else if (leftOne(current) && leftTwo(current))
                 {
                     // left-left rotation
                     rightRotate(current -> parent -> parent);
                     rightRotate(current -> parent);
                 }
-                //checks right-right
+                    //checks right-right
                 else if (rightOne(current) && rightTwo(current))
                 {
                     // right-right rotation
                     leftRotate(current -> parent -> parent);
                     leftRotate(current -> parent);
                 }
-                //checks left-right
+                    //checks left-right
                 else if (rightOne(current) && leftTwo(current))
                 {
                     // left-right rotation
                     leftRotate(current -> parent);
                     rightRotate(current -> parent);
                 }
-                //if default then right-left
+                    //if default then right-left
                 else
                 {
                     // right-left rotation
@@ -253,16 +253,16 @@ public:
 
                     //timer ends since splay tree search is over
                     auto stop = high_resolution_clock::now();
-                    auto duration = duration_cast<nanoseconds>(stop - start);
+                    auto duration = duration_cast<microseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " microseconds!" << endl;
                     break;
                 }
                 //keeps traversing right
                 temp = temp -> right;
             }
-            //checks if it is on the left side
+                //checks if it is on the left side
             else if (temp -> ID > ID)
             {
                 //checks if ID is not found then output
@@ -273,16 +273,16 @@ public:
 
                     //timer ends since splay tree search is over
                     auto stop = high_resolution_clock::now();
-                    auto duration = duration_cast<nanoseconds>(stop - start);
+                    auto duration = duration_cast<microseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " microseconds!" << endl;
                     break;
                 }
                 //keeps traversing left
                 temp = temp -> left;
             }
-            //checks if it equals the current ID
+                //checks if it equals the current ID
             else if (temp -> ID == ID)
             {
                 //output statement
@@ -293,10 +293,10 @@ public:
 
                     //timer ends since splay tree search is over
                     auto stop = high_resolution_clock::now();
-                    auto duration = duration_cast<nanoseconds>(stop - start);
+                    auto duration = duration_cast<microseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " microseconds!" << endl;
                     break;
                 }
                 else
@@ -306,26 +306,26 @@ public:
 
                     //timer ends since splay tree search is over
                     auto stop = high_resolution_clock::now();
-                    auto duration = duration_cast<nanoseconds>(stop - start);
+                    auto duration = duration_cast<microseconds>(stop - start);
 
                     //prints out splay tree time
-                    cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
+                    cout << "The Splay Tree Search took " << duration.count() << " microseconds!" << endl;
                     break;
                 }
 
                 break;
             }
-            //if not found output NOT FOUND
+                //if not found output NOT FOUND
             else
             {
                 cout << "REVIEW ID: " << ID << " COULD NOT BE FOUND :(" << endl;
 
                 //timer ends since splay tree search is over
                 auto stop = high_resolution_clock::now();
-                auto duration = duration_cast<nanoseconds>(stop - start);
+                auto duration = duration_cast<microseconds>(stop - start);
 
                 //prints out splay tree time
-                cout << "The Splay Tree Search took " << duration.count() << " nanoseconds!" << endl;
+                cout << "The Splay Tree Search took " << duration.count() << " microseconds!" << endl;
                 break;
             }
         }
@@ -337,7 +337,7 @@ public:
     //parent auto set to nullptr
     void parentFunction(Node*& node, Node*& temp, Node*& parent)
     {
-    //goes through all the nodes until it reaches it
+        //goes through all the nodes until it reaches it
         while (temp != nullptr)
         {
             parent = temp;
@@ -346,7 +346,7 @@ public:
             {
                 temp = temp -> left;
             }
-            //checks if it is on the right
+                //checks if it is on the right
             else
             {
                 temp = temp -> right;
@@ -370,7 +370,7 @@ public:
         {
             parent -> left = node;
         }
-        //checks if it is on the right
+            //checks if it is on the right
         else
         {
             parent -> right = node;
