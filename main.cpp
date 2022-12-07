@@ -12,7 +12,6 @@ int main() {
     SplayTree splayTree;
 
     //reads the file and inserts data into the tree
-    int reviewCount = 0;
     string data;
     string header;
     ifstream SteamReviews("SteamReviews.txt");
@@ -46,8 +45,6 @@ int main() {
             //cout << game << " " << id << " " << review << endl;
             redBlackTree.insert(id, game, review);
             splayTree.insert(id, game, review);
-
-            reviewCount++;
         }
     }
     //asks the user how many reviews they want to look up
@@ -68,6 +65,5 @@ int main() {
         splayTree.search(userInput);
         cout << endl;
     }
-    cout << reviewCount;
     return 0;
 }
