@@ -222,9 +222,9 @@ RedBlackTree::Node *RedBlackTree::searchID(RedBlackTree::Node *node, int id) {
         cout << "REVIEW ID: " << id << " COULD NOT BE FOUND :(" << endl;
         //item is found or not found so the timer stops and the time is printed
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<nanoseconds>(stop - start);
+        auto duration = duration_cast<microseconds>(stop - start);
         //prints out the final time
-        cout << "The Red Black Tree Search took " << duration.count() << " nanoseconds!" << endl;
+        cout << "The Red Black Tree Search took " << duration.count() << " microseconds!" << endl;
         return node;
     }
     else if(id == node -> id)
@@ -235,9 +235,9 @@ RedBlackTree::Node *RedBlackTree::searchID(RedBlackTree::Node *node, int id) {
             cout <<" and the review says " + node -> review << endl;
             //item is found or not found so the timer stops and the time is printed
             auto stop = high_resolution_clock::now();
-            auto duration = duration_cast<nanoseconds>(stop - start);
+            auto duration = duration_cast<microseconds>(stop - start);
             //prints out the final time
-            cout << "The Red Black Tree Search took " << duration.count() << " nanoseconds!" << endl;
+            cout << "The Red Black Tree Search took " << duration.count() << " microseconds!" << endl;
             return node;
         }
         else
@@ -246,9 +246,9 @@ RedBlackTree::Node *RedBlackTree::searchID(RedBlackTree::Node *node, int id) {
             cout <<" and the review says \"" + node -> review + "\"" << endl;
             //item is found or not found so the timer stops and the time is printed
             auto stop = high_resolution_clock::now();
-            auto duration = duration_cast<nanoseconds>(stop - start);
+            auto duration = duration_cast<microseconds>(stop - start);
             //prints out the final time
-            cout << "The Red Black Tree Search took " << duration.count() << " nanoseconds!" << endl;
+            cout << "The Red Black Tree Search took " << duration.count() << " microseconds!" << endl;
             return node;
         }
     }
@@ -257,9 +257,9 @@ RedBlackTree::Node *RedBlackTree::searchID(RedBlackTree::Node *node, int id) {
         cout << "REVIEW ID: " << id << " COULD NOT BE FOUND :(" << endl;
         //item is found or not found so the timer stops and the time is printed
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<nanoseconds>(stop - start);
+        auto duration = duration_cast<microseconds>(stop - start);
         //prints out the final time
-        cout << "The Red Black Tree Search took " << duration.count() << " nanoseconds!" << endl;
+        cout << "The Red Black Tree Search took " << duration.count() << " microseconds!" << endl;
         return node;
     }
     else if(id < node -> id)
